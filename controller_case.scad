@@ -79,7 +79,7 @@ module edge(r1, r2){
             rotate([0,0,180])
             rotate_extrude(convexity=10, angle=90){
                 translate([r2-r1, 0]) {
-                    half_circle(r1);
+                    kwart_circle(r1);
                 }
             }
             translate([r2,r2,r1]){
@@ -94,7 +94,7 @@ module edge(r1, r2){
                 rotate([0,0,180])
                 rotate_extrude(convexity=10, angle=90){
                     translate([r2-r1, 0]) {
-                        half_circle(r1);
+                        kwart_circle(r1);
                     }
                 }
                 translate([r2,r2,r1]){
@@ -110,7 +110,7 @@ module edge(r1, r2){
                 rotate([0,0,180])
                 rotate_extrude(convexity=10, angle=90){
                     translate([r2-r1, 0]) {
-                        half_circle(r1);
+                        kwart_circle(r1);
                     }
                 }
                 translate([r2,r2,r1]){
@@ -126,7 +126,7 @@ module edge(r1, r2){
                 rotate([0,0,180])
                 rotate_extrude(convexity=10, angle=90){
                     translate([r2-r1, 0]) {
-                        half_circle(r1);
+                        kwart_circle(r1);
                     }
                 }
                 translate([r2,r2,r1]){
@@ -189,19 +189,19 @@ module achterkant(){
             translate([rand_dikte+speling+pcb_lengte-afstand_gat_pcb-0.5*gat_diameter,rand_dikte+speling+pcb_breedte-afstand_gat_pcb-0.5*gat_diameter,dikte_onderplaat+pcb_afstand])
             brass_insert_hole(brass_insert_lengte,brass_insert_buiten_diameter);
 
-            translate([rand_dikte/2, rand_dikte/2,0]){              
+            translate([rand_dikte/2+1, rand_dikte/2+1,0]){              
                 schroef_cutout(5.6,6,3,1.65,0.8);
             }
 
-            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2, rand_dikte/2,0]){
+            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2-1, rand_dikte/2+1,0]){
                 schroef_cutout(5.6,6,3,1.65,0.8);
             }
 
-            translate([rand_dikte/2, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2, 0]){
+            translate([rand_dikte/2+1, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2-1, 0]){
                 schroef_cutout(5.6,6,3,1.65,0.8);
             }
 
-            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2, 0]){
+            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2-1, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2-1, 0]){
                 schroef_cutout(5.6,6,3,1.65,0.8);
             }
 
@@ -294,7 +294,7 @@ module voorkant(with_usb=true){
             translate([rand_dikte+0.5+3+0.5*(lengte_scherm_pcb-lengte_scherm),-0.5*breedte_scherm+0.5*pcb_breedte+rand_dikte+speling+0.5,-0.1])
             cube([lengte_scherm, breedte_scherm,4]);
 
-            translate([pcb_lengte+speling+rand_dikte-draaiknop_breedte*0.5,0.5*pcb_breedte+rand_dikte+speling,-0.1])
+            translate([pcb_lengte+speling+rand_dikte-draaiknop_breedte*0.5+3,0.5*pcb_breedte+rand_dikte+speling,-0.1])
             cylinder(10,d=draaiknop_diameter_gat);  
             
             translate([rand_dikte+0.5+3,pcb_breedte/2+rand_dikte+speling-lengte_beeldscherm_connector_uitsparing/2,dikte_voorkant-hoogte_beeldscherm_connector_uitsparing]){
@@ -304,16 +304,16 @@ module voorkant(with_usb=true){
                 cube([(lengte_scherm_pcb-lengte_scherm)/2,lengte_beeldscherm_connector_uitsparing,hoogte_beeldscherm_connector_uitsparing]);
             }
 
-            translate([rand_dikte/2, rand_dikte/2,hoogte])
+            translate([rand_dikte/2+1, rand_dikte/2+1, hoogte])
             brass_insert_hole(brass_insert_lengte,brass_insert_buiten_diameter);
 
-            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2, rand_dikte/2,hoogte])
+            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2-1, rand_dikte/2+1,hoogte])
             brass_insert_hole(brass_insert_lengte,brass_insert_buiten_diameter);
 
-            translate([rand_dikte/2, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2, hoogte])
+            translate([rand_dikte/2+1, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2-1, hoogte])
             brass_insert_hole(brass_insert_lengte,brass_insert_buiten_diameter);
 
-            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2, hoogte])
+            translate([pcb_lengte+2*(rand_dikte+speling)-rand_dikte/2-1, pcb_breedte+2*(rand_dikte+speling)-rand_dikte/2-1, hoogte])
             brass_insert_hole(brass_insert_lengte,brass_insert_buiten_diameter);
 
             if(with_usb){
@@ -365,10 +365,10 @@ module voorkant(with_usb=true){
     }
 }
 
-$fn = 128;
-// $fn = 8;
+// $fn = 128;
+$fn = 16;
 
-front = true;
+front = false;
 with_usb = true;
 
 if (front) {
@@ -382,6 +382,20 @@ module half_circle(r){
         circle(r);
         translate([0, r, 0]) {
             square(2*r, true);
+        }
+    }
+}
+
+module kwart_circle(r){
+    difference(){
+        circle(r);
+        union(){
+            translate([-r, -r, 0]) {
+                square([r, r], false);
+            }
+            translate([0, r, 0]) {
+                square(2*r, true);
+            }
         }
     }
 }
