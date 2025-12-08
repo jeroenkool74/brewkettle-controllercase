@@ -1,0 +1,27 @@
+name: Render OpenSCAD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-openscad:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+      - name: Build models
+        run: |
+          commit=$(git rev-parse --short HEAD)
+          mkdir -p build
+          openscad -o build/controller_case_back.stl -D "$fn=128; front=false; commit=\"$commit\"" controller_case.scad
+          openscad -o build/controller_case_front_with_usb.stl -D "$fn=128; front=true; with_usb = true; commit=\"$commit\"" controller_case.scad
+          openscad -o build/controller_case_front.stl -D "$fn=128; front=true; with_usb = false; commit=\"$commit\"" controller_case.scad
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: openscad-build
+          path: build/
