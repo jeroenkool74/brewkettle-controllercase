@@ -17,9 +17,9 @@ jobs:
         run: |
           commit=$(git rev-parse --short HEAD)
           mkdir -p build
-          openscad -o build/controller_case_back.stl -D "$fn=128; front=false; commit=\"$commit\"" controller_case.scad
-          openscad -o build/controller_case_front_with_usb.stl -D "$fn=128; front=true; with_usb = true; commit=\"$commit\"" controller_case.scad
-          openscad -o build/controller_case_front.stl -D "$fn=128; front=true; with_usb = false; commit=\"$commit\"" controller_case.scad
+          openscad -o build/controller_case_back.stl -D "\$fn=128" -D "front=false" -D "commit=\"$commit\"" controller_case.scad
+          openscad -o build/controller_case_front_with_usb.stl -D "\$fn=128" -D "front=true" -D "with_usb=true" -D "commit=\"$commit\"" controller_case.scad
+          openscad -o build/controller_case_front.stl -D "\$fn=128" -D "front=true" -D "with_usb=false" -D "commit=\"$commit\"" controller_case.scad
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
