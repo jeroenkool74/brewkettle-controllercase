@@ -4,8 +4,12 @@ on:
   push:
     branches: [ main ]
 
+    tags:
+      - 'v*'
+
 jobs:
   build-openscad:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +24,43 @@ jobs:
           openscad -o build/controller_case_back.stl -D "\$fn=128" -D "front=false" -D "commit=\"$commit\"" controller_case.scad
           openscad -o build/controller_case_front_with_usb.stl -D "\$fn=128" -D "front=true" -D "with_usb=true" -D "commit=\"$commit\"" controller_case.scad
           openscad -o build/controller_case_front.stl -D "\$fn=128" -D "front=true" -D "with_usb=false" -D "commit=\"$commit\"" controller_case.scad
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: openscad-build
-          path: build/
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload controller_case_back.stl
+        id: upload-release-asset-back
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/controller_case_back.stl
+          asset_name: controller_case_back-${{ github.ref_name }}.stl
+          asset_content_type: application/sla
+      - name: Upload controller_case_front_with_usb.stl
+        id: upload-release-asset-front-usb
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/controller_case_front_with_usb.stl
+          asset_name: controller_case_front_with_usb-${{ github.ref_name }}.stl
+          asset_content_type: application/sla
+      - name: Upload controller_case_front.stl
+        id: upload-release-asset-front
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/controller_case_front.stl
+          asset_name: controller_case_front-${{ github.ref_name }}.stl
+          asset_content_type: application/sla
