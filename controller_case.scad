@@ -20,7 +20,7 @@ radius_grote_rand = 6;
 lengte_beeldscherm_connector_uitsparing = 25;
 hoogte_beeldscherm_connector_uitsparing = 1.5;
 
-commit = "abcdef";
+commit = "9963d08";
 
 module brass_insert_hole(l, k){ 
     translate([0,0,-l-1])
@@ -205,7 +205,7 @@ module achterkant(){
 
             edge(radius_kleine_rand,radius_grote_rand);
             
-            translate([(rand_dikte*2+speling*2+pcb_lengte)/2-25,6,dikte_onderplaat-1])
+            translate([(rand_dikte*2+speling*2+pcb_lengte)/2-30,6,dikte_onderplaat-1])
             write(commit);
 
         }
@@ -356,15 +356,15 @@ module voorkant(with_usb=true){
             translate([rand_dikte+speling+2*afstand_gat_pcb+gat_diameter, pcb_breedte+2*(rand_dikte+speling)-13, dikte_voorkant])
             cube([pcb_lengte-4*afstand_gat_pcb-2*gat_diameter,rand_dikte-3,hoogte]);
 
-            translate([(rand_dikte*2+speling*2+pcb_lengte)/2-25,6,dikte_voorkant-1])
+            translate([(rand_dikte*2+speling*2+pcb_lengte)/2-30,6,dikte_voorkant-1])
             write(commit);
 
         }
     }
 }
 
-$fn = 128;
-// $fn = 16;
+// $fn = 128;
+$fn = 16;
 
 front = false;
 with_usb = true;
@@ -377,7 +377,7 @@ if (front) {
 
 module write(text) {
     linear_extrude(1)
-    text(text, size=12);
+    text(text, size=10);
 }
 
 module half_circle(r){
