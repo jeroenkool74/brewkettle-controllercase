@@ -14,7 +14,7 @@ speling=0.5;
 brass_insert_lengte=4;
 brass_insert_buiten_diameter=5;
 
-radius_kleine_rand = 4;
+radius_kleine_rand = 1;
 radius_grote_rand = 6; 
 
 lengte_beeldscherm_connector_uitsparing = 25;
@@ -363,10 +363,10 @@ module voorkant(with_usb=true){
     }
 }
 
-// $fn = 128;
-$fn = 16;
+$fn = 128;
+// $fn = 16;
 
-front = true;
+front = false;
 with_usb = true;
 
 if (front) {
