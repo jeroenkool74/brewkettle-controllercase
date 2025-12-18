@@ -9,7 +9,7 @@ pcb_dikte=1.6;
 
 pcb_afstand=3;
 
-speling=0.5;
+speling=0.15;
 
 brass_insert_lengte=4;
 brass_insert_buiten_diameter=5;
